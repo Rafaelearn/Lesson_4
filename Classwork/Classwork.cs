@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace Classwork
 {
@@ -109,7 +110,7 @@ namespace Classwork
         static public void DoTask3()
         {
             Console.Write("Введите количесвто членов последоватеьности n: ");
-            if (!int.TryParse(Console.ReadLine(), out int n) || n < 0)
+            if (!int.TryParse(Console.ReadLine(), out int n) || n < 1)
             {
                 throw new FormatException("Wrong format n. String: 112");
             }
@@ -260,9 +261,11 @@ namespace Classwork
                         goto case 8;
                     default:
                         Console.BackgroundColor = ConsoleColor.Red;
+                        Console.Clear();
+                        Console.WriteLine("Данное число не является цифрой. Подожди 3 секунды.");
                         System.Threading.Thread.Sleep(3000);
-                        Console.WriteLine("Данное число не является цифрой");
                         Console.ResetColor();
+                        Console.Clear();
                         flag = false;
                         break;
                 }
@@ -276,10 +279,13 @@ namespace Classwork
                         }
                         Console.WriteLine();
                     }
+                    
                 }
+                Console.Write("Введите следующую цифру: ");
                 inputUser = Console.ReadLine();
             }
         }
+        
         static public double[] SolveQuadratEqution(double a, double b, double c, bool outputBool = false)
         {
             if (a == 0)

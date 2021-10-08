@@ -7,22 +7,38 @@ namespace Lab_4
         static void Main(string[] args)
         {
             Console.WriteLine("Exercises 5.1");
-            Console.WriteLine(" " + MaxValue(1, 2));
+            Console.WriteLine("Введите целое число a: ");
+            if (!int.TryParse(Console.ReadLine(), out int inputA))
+            {
+                throw new FormatException("Wrong format for input1. String 11");
+            }
+            Console.WriteLine("Введите целое число b: ");
+            if (!int.TryParse(Console.ReadLine(), out int inputB))
+            {
+                throw new FormatException("Wrong format for input2. String 12");
+            }
+            Console.WriteLine("Максимальное значение: " + MaxValue(1, 2));
 
 
             Console.WriteLine("\nExercises 5.2");
-            // testing method
-            int a = 1;
-            int b = 2;
-            Console.WriteLine($"a = {a}; b = {b}");
-            ReplaceParametr(ref a, ref b);
-            Console.WriteLine($"a = {a}; b = {b}");
+            Console.WriteLine($"a = {inputA}; b = {inputB}");
+            ReplaceParametr(ref inputA, ref inputB);
+            Console.WriteLine($"a = {inputA}; b = {inputB}");
 
-            //Console.WriteLine("\nExercises 5.3");
+            Console.WriteLine("\nExercises 5.3");
+            Console.WriteLine("Введите натуральное число: ");
+            if (!uint.TryParse(Console.ReadLine(), out uint inputF) || inputF == 0)
+            {
+                throw new FormatException("Wrong format for inputF. String 30");
+            }
+            bool flagChecked = FactorilChecked(inputF);
 
             Console.WriteLine("\nExercises 5.4");
-            Console.WriteLine(" " + Factorial(10UL));
-
+            if (flagChecked)
+            {
+                Console.WriteLine("Факториал числа равен " + Factorial(inputF));
+            }
+           
             Console.WriteLine("\nHome Exercises 5.1");
             Console.WriteLine(" " + GSD(17, 18, 19));
 
@@ -48,20 +64,24 @@ namespace Lab_4
             a = b;
             b = temp;
         }
-        //static bool FactorilChecked (ulong n)
-        //{
-        //    try
-        //    {
-        //        FactorilChecked(n)
-
-        //    }
-        //    catch (Exception)
-        //    {
-
-
-        //    }
-        //}
-        static ulong Factorial(ulong n)
+        static bool FactorilChecked(uint n)
+        {
+            try
+            {
+                for (uint i = n - 1; i > 0; i--)
+                {
+                    n = checked(n * i);
+                }
+                Console.WriteLine("Факториал числа равен " + n);
+                return true;
+            }
+            catch (OverflowException ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
+        static uint Factorial(uint n)
         {
             if (n == 1)
             {
@@ -69,7 +89,7 @@ namespace Lab_4
             }
             else
             {
-                return n * Factorial(n - 1);
+                return n* Factorial(n -1);
             }
         }
         static int GSD(int a, int b)
