@@ -7,40 +7,10 @@ namespace Homework
     {
         static void Main(string[] args)
         {
-            DoTask1();
+            //DoTask1();
             DoTask2();
-            
+
             Console.ReadKey();
-        }
-        static double DFS(bool[,] matrG, uint start, uint end)
-        {
-            string path = start.ToString();
-            int n = matrG.GetLength(1);
-            bool[] visited = new bool[n], explore = new bool[n];
-            visited[start] = explore[start] = true;
-            for (int i = 0; i < n; i++)
-            {
-                if (explore[i])
-                {
-                    for (int j = 0; j < n; j++)
-                    {
-                        if (!visited[j])
-                        {
-                            if (matrG[i, j])
-                            {
-                                visited[j] = true;
-                                explore[j] = true;
-                            }
-                        }
-
-                    }
-                    explore[i] = false;
-                }
-            }
-            while (true)
-            {
-
-            }
         }
         static void DoTask1()
         {
@@ -89,7 +59,7 @@ namespace Homework
             {
                 Console.Write(item + " ");
             }
-        } 
+        }
         static void DoTask2()
         {
             Console.Write("Введите количество вершин графа n: ");
@@ -98,23 +68,23 @@ namespace Homework
                 throw new FormatException("Format of n is wrong. String: 12");
             }
             bool[,] matrixG = new bool[n, n];
-            Console.WriteLine("Определите связь графов между собой\n0 - отсутсвие связи\n1 - наличие связи)");
+            Console.WriteLine("Определите связь графов между собой\n0 - отсутсвие связи\n1 - наличие связи");
             for (int i = 0; i < n - 1; i++)
             {
                 for (int j = i; j < n - 1; j++)
                 {
-
+                    Console.Write($"Edge[{i}, {j + 1}] = ");
                     ConsoleKey consoleKey = Console.ReadKey().Key;
                     Console.WriteLine();
                     switch (consoleKey)
                     {
                         case ConsoleKey.D0:
                         case ConsoleKey.NumPad0:
-                            matrixG[i, j + 1] = true;
-                            matrixG[j + 1, i] = matrixG[i, j + 1];
                             break;
                         case ConsoleKey.D1:
                         case ConsoleKey.NumPad1:
+                            matrixG[i, j + 1] = true;
+                            matrixG[j + 1, i] = matrixG[i, j + 1];
                             break;
                         default:
                             Console.WriteLine("Неверный выбор. Попробуй снова: ");
@@ -123,18 +93,30 @@ namespace Homework
                     }
                 }
             }
-            Console.WriteLine("Введите точку входа a (0 < a <= n): ");
+            Console.Write("Введите точку входа a (0 < a <= n): ");
             if (!uint.TryParse(Console.ReadLine(), out uint start) || start > n || start < 0)
             {
-                throw new FormatException("Format of start is wrong. String: 39");
+                throw new FormatException("Format of start is wrong. String: 99");
             }
-            Console.WriteLine("Введите точку выхода b (0 < b <= n b != a): ");
+            Console.Write("Введите точку выхода b (0 < b <= n b != a): ");
             if (!uint.TryParse(Console.ReadLine(), out uint end) || end > n || end < 0 || end == start)
             {
-                throw new FormatException("Format of end is wrong. String: 44");
+                throw new FormatException("Format of end is wrong. String: 104");
+            }
+            if (BFS(out List<uint> path, matrixG, start, end))
+            {
+                Console.WriteLine("Путь от А до B: ");
+                foreach (var item in path)
+                {
+                    Console.Write(item + " ");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Достигнуть точки B из A невозможно....");
             }
         }
-        static List<int> QSort (List<int> order, bool descendingSort = false)
+        static List<int> QSort(List<int> order, bool descendingSort = false)
         {
             if (order.Count <= 1)
             {
@@ -175,13 +157,75 @@ namespace Homework
                         center.Add(order[i]);
                     }
                 }
-               
+
             }
             left = QSort(left, descendingSort);
             left.AddRange(center);
             left.AddRange(QSort(right, descendingSort));
 
             return left;
+        }
+        static bool BFS(out List<uint> path, bool[,] matrG, uint start, uint end)
+        {
+            List<uint> visited = new List<uint>() { start };
+            List<uint> explore = new List<uint>() { start };
+            path = new List<uint>();
+            while (explore.Count != 0)
+            {
+                uint vertex = explore[0];
+                explore.RemoveAt(0);
+                path.Add(vertex);
+                for (uint i = 0; i < matrG.GetLength(1); i++)
+                {
+                    if (!visited.Contains(i))
+                    {
+                        if (matrG[vertex, i])
+                        {
+                            explore.Add(i);
+                            visited.Add(i);
+                            if (i == end)
+                            {
+                                path.Add(end);
+                                return true;
+                            }
+                        }
+                    }
+                }
+
+            }
+            path.Clear();
+            return false;
+        }
+        static bool DFS(out List<uint> path, bool[,] matrG, uint start, uint end)
+        {
+            List<uint> visited = new List<uint>() { start };
+            List<uint> explore = new List<uint>() { start };
+            path = new List<uint>();
+            while (explore.Count != 0)
+            {
+                uint vertex = explore[explore.Count - 1];
+                explore.RemoveAt(explore.Count - 1);
+                path.Add(vertex);
+                for (uint i = 0; i < matrG.GetLength(1); i++)
+                {
+                    if (!visited.Contains(i))
+                    {
+                        if (matrG[vertex, i])
+                        {
+                            explore.Add(i);
+                            visited.Add(i);
+                            if (i == end)
+                            {
+                                path.Add(end);
+                                return true;
+                            }
+                        }
+                    }
+                }
+
+            }
+            path.Clear();
+            return false;
         }
     }
 }
