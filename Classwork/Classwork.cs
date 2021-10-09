@@ -59,7 +59,6 @@ namespace Classwork
                     Console.WriteLine("Формат ввода неправильный. Попробуй снова.");
                 }
             }
-
         }
         static public void DoTask2()
         {
@@ -105,7 +104,6 @@ namespace Classwork
                     Console.Write(item + " ");
                 }
             }
-
         }
         static public void DoTask3()
         {
@@ -279,13 +277,11 @@ namespace Classwork
                         }
                         Console.WriteLine();
                     }
-                    
                 }
                 Console.Write("Введите следующую цифру: ");
                 inputUser = Console.ReadLine();
             }
         }
-        
         static public double[] SolveQuadratEqution(double a, double b, double c, bool outputBool = false)
         {
             if (a == 0)

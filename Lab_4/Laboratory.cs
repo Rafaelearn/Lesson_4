@@ -7,18 +7,17 @@ namespace Lab_4
         static void Main(string[] args)
         {
             Console.WriteLine("Exercises 5.1");
-            Console.WriteLine("Введите целое число a: ");
+            Console.Write("Введите целое число a: ");
             if (!int.TryParse(Console.ReadLine(), out int inputA))
             {
                 throw new FormatException("Wrong format for input1. String 11");
             }
-            Console.WriteLine("Введите целое число b: ");
+            Console.Write("Введите целое число b: ");
             if (!int.TryParse(Console.ReadLine(), out int inputB))
             {
-                throw new FormatException("Wrong format for input2. String 12");
+                throw new FormatException("Wrong format for input2. String 17");
             }
-            Console.WriteLine("Максимальное значение: " + MaxValue(1, 2));
-
+            Console.Write("Максимальное значение: " + MaxValue(inputA, inputB));
 
             Console.WriteLine("\nExercises 5.2");
             Console.WriteLine($"a = {inputA}; b = {inputB}");
@@ -26,7 +25,7 @@ namespace Lab_4
             Console.WriteLine($"a = {inputA}; b = {inputB}");
 
             Console.WriteLine("\nExercises 5.3");
-            Console.WriteLine("Введите натуральное число: ");
+            Console.Write("Введите натуральное число: ");
             if (!uint.TryParse(Console.ReadLine(), out uint inputF) || inputF == 0)
             {
                 throw new FormatException("Wrong format for inputF. String 30");
@@ -40,23 +39,16 @@ namespace Lab_4
             }
            
             Console.WriteLine("\nHome Exercises 5.1");
-            Console.WriteLine(" " + GSD(17, 18, 19));
+            Console.WriteLine("НОД(34, 36, 38) = " + GSD(34, 36, 38));
 
-            Console.WriteLine("Home Exercises 5.2");
-            Console.WriteLine(" " + Fibonacci(17));
+            Console.WriteLine("\nHome Exercises 5.2");
+            Console.WriteLine("17-ое число Фибонначи: " + FindFibonacciNumber(17));
 
             Console.ReadKey();
         }
         static int MaxValue(int a, int b)
         {
-            if (a > b)
-            {
-                return a;
-            }
-            else
-            {
-                return b;
-            }
+            return (a>b)?a:b;
         }
         static void ReplaceParametr(ref int a, ref int b)
         {
@@ -83,24 +75,13 @@ namespace Lab_4
         }
         static uint Factorial(uint n)
         {
-            if (n == 1)
-            {
-                return 1;
-            }
-            else
-            {
-                return n* Factorial(n -1);
-            }
+            return (n==1)?1: n * Factorial(n - 1);
         }
         static int GSD(int a, int b)
         {
-            while (true)
+            while (a != b)
             {
-                if (a == b)
-                {
-                    return a;
-                }
-                else if (a > b)
+                if (a > b)
                 {
                     a -= b;
                 }
@@ -109,6 +90,7 @@ namespace Lab_4
                     b -= a;
                 }
             }
+            return a;
         }
         static int GSD(int a, int b, int c)
         {
@@ -122,7 +104,7 @@ namespace Lab_4
                 return GSD(a, c);
             }
         }
-        static int Fibonacci(int n)
+        static int FindFibonacciNumber(int n)
         {
             if (n == 1 || n == 2)
             {
@@ -130,7 +112,7 @@ namespace Lab_4
             }
             else
             {
-                return Fibonacci(n - 1) + Fibonacci(n - 2);
+                return FindFibonacciNumber(n - 1) + FindFibonacciNumber(n - 2);
             }
         }
     }

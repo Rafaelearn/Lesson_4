@@ -7,7 +7,7 @@ namespace Homework
     {
         static void Main(string[] args)
         {
-            //DoTask1();
+            DoTask1();
             DoTask2();
 
             Console.ReadKey();
