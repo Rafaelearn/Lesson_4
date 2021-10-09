@@ -62,9 +62,14 @@ namespace Classwork
         static public void DoTask2()
         {
             Random random = new Random();
+            Console.WriteLine("Length of array: ");
+            if (!int.TryParse(Console.ReadLine(), out int n) || n < 1)
+            {
+                throw new FormatException("Wrong format n. Task 2");
+            }
             Console.WriteLine("Array: ");
-            int[] arrayRandNum = new int[20];
-            for (int i = 0; i < 20; i++)
+            int[] arrayRandNum = new int[n];
+            for (int i = 0; i < n; i++)
             {
                 arrayRandNum[i] = random.Next(1000);
                 Console.Write(arrayRandNum[i] + " ");
@@ -76,7 +81,7 @@ namespace Classwork
             bool exception2 = int.TryParse(Console.ReadLine(), out int num2);
             if (!exception1 || !exception2) throw new Exception("Exception output: num1 и num2");
             int index1 = -1, index2 = -1;
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < n; i++)
             {
                 if (arrayRandNum[i] == num1) index1 = i;
                 if (arrayRandNum[i] == num2) index2 = i;
@@ -109,13 +114,13 @@ namespace Classwork
             Console.Write("Введите количесвто членов последоватеьности n: ");
             if (!int.TryParse(Console.ReadLine(), out int n) || n < 1)
             {
-                throw new FormatException("Wrong format n. String: 112");
+                throw new FormatException("Wrong format n. String: 117");
             }
             Console.WriteLine("Введите последовательность чисел: ");
             string input = Console.ReadLine();
             if (input.Split().Length != n)
             {
-                throw new FormatException("Format input string fit n. String: 120");
+                throw new FormatException("Format input string fit n. String: 123");
             }
             int[] order = new int[n];
             for (int i = 0; i < n; i++)
